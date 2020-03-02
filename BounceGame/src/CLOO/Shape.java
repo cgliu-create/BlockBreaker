@@ -44,33 +44,39 @@ public class Shape {
     public void setMovingUp(){moving=true;movingDown=false;movingUp=true;}
     public void setMoving(){moving=false;movingLeft=false;movingRight=false;}
     //checks "contact" with two shapes
-    public boolean hitsTB(Object s){
+    //other = ball
+    public boolean hitsTop(Object s){
         Shape other = (Shape)s;
-        //other is right below or right above
-        if(this.getyPos()==other.getyPos()+other.getHeight() || this.getyPos()+this.getHeight()==other.getyPos()){
-            //other is to the left
-            if(other.getxPos()<=this.getxPos()){
-                return this.getxPos()-other.getxPos()<=other.getWidth();
-            }
-            //other is to the right
-            if(other.getxPos()>this.getxPos()){
-                return other.getxPos()-this.getxPos()<=this.getWidth();
+        if(other.getxPos()>=this.getxPos()&&other.getxPos()<=(this.getxPos()+this.width)){
+            if(Math.abs((other.getyPos()+other.height) - this.getyPos())<=10){
+                return true;
             }
         }
         return false;
     }
-    //checks "contact" with two shapes
-    public boolean hitsLR(Object s){
+    public boolean hitsBottom(Object s){
         Shape other = (Shape)s;
-        //other is just to the left ot just to the right
-        if(this.getxPos()==other.getxPos()+other.getWidth() || this.getxPos()+this.getWidth()==other.getxPos()){
-            //other is slightly above
-            if(other.getyPos()<=this.getyPos()){
-                return this.getyPos()-other.getyPos()<=other.getHeight();
+        if(other.getxPos()>=this.getxPos()&&other.getxPos()<=(this.getxPos()+this.width)){
+            if(Math.abs(other.getyPos() - (this.getyPos()+this.height))<=10){
+                return true;
             }
-            //other is slightly below
-            if(other.getyPos()>this.getyPos()){
-                return other.getyPos()-this.getyPos()<=this.getHeight();
+        }
+        return false;
+    }
+    public boolean hitsLeft(Object s){
+        Shape other = (Shape)s;
+        if(other.getyPos()>=this.getyPos()&&other.getyPos()<=(this.getyPos()+this.height)){
+            if(Math.abs(other.getxPos()-this.getxPos())<=10){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean hitsRight(Object s){
+        Shape other = (Shape)s;
+        if(other.getyPos()>=this.getyPos()&&other.getyPos()<=(this.getyPos()+this.height)){
+            if(Math.abs(other.getxPos() - (this.getxPos() + this.width) )<= 10){
+                return true;
             }
         }
         return false;
